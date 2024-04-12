@@ -27,7 +27,39 @@ class ViewController: UIViewController {
         super.viewDidLoad()
     }
     
-    
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        
+        guard
+            loginInputField.text != nil,
+            loginInputField.text != ""
+        else {
+            print("empty login")
+            credsAlert(wrong: .login)
+            return false
+        }
+        
+        guard
+            passwordInputField.text != nil,
+            passwordInputField.text != ""
+        else {
+            print("empty password")
+            credsAlert(wrong: .password)
+            return false
+        }
+        
+        guard
+            loginInputField.text == trueLogin,
+            passwordInputField.text == truePassword
+        else {
+            print("wrong")
+            credsAlert(wrong: .creds)
+            // Введенное имя не валидно, отменяем переход и показываем алерт контроллер
+            return false
+        }
+        
+        // Введенное имя валидно, разрешаем переход
+        return true
+    }
     
     @IBAction func fogotLogin() {
         promptAlert(remindMe: .login)
@@ -36,6 +68,7 @@ class ViewController: UIViewController {
     @IBAction func fogotPassword() {
         promptAlert(remindMe: .password)
     }
+    
     
     
     @IBAction func unwind(for segue: UIStoryboardSegue) {
@@ -54,6 +87,7 @@ extension ViewController {
     }
     
     fileprivate func promptAlert(remindMe: Prompt) {
+        
         let message: String
         
         switch remindMe {
@@ -76,5 +110,41 @@ extension ViewController {
         
         present(alert, animated: true)
     }
+    
+    
+    // MARK: Alerts
+    enum Alert {
+        case login
+        case password
+        case creds
+    }
+    
+    fileprivate func credsAlert(wrong: Alert) {
+        
+        let message: String
+        
+        switch wrong {
+        case .login:
+            message = "Empty User Name"
+        case .password:
+            message = "Empty Password"
+        case .creds:
+            message = "Wrong User Name or Password"
+        }
+        
+        let alert = UIAlertController(
+            title: "Wrong credentials",
+            message: message,
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(
+            title: "OK",
+            style: .default)
+        )
+        
+        present(alert, animated: true)
+    }
+    
 }
 
