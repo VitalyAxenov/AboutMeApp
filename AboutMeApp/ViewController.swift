@@ -27,12 +27,18 @@ class ViewController: UIViewController {
         super.viewDidLoad()
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesBegan(
+        _ touches: Set<UITouch>,
+        with event: UIEvent?
+    ) {
         super.touchesBegan(touches, with: event)
         self.view.endEditing(true)
     }
     
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+    override func shouldPerformSegue(
+        withIdentifier identifier: String,
+        sender: Any?
+    ) -> Bool {
         
         guard
             loginInputField.text != nil,
@@ -61,6 +67,7 @@ class ViewController: UIViewController {
         return true
     }
     
+    
     @IBAction func fogotLogin() {
         promptAlert(remindMe: .login)
     }
@@ -69,6 +76,16 @@ class ViewController: UIViewController {
         promptAlert(remindMe: .password)
     }
     
+    
+    @IBAction func userNameReturnKeyTapped() {
+        print("return key tapped")
+        passwordInputField.becomeFirstResponder()
+    }
+    
+    @IBAction func passwordReturnKeyTapped() {
+        print("PSWD return key tapped")
+        self.view.endEditing(true)
+    }
     
     
     @IBAction func unwind(for segue: UIStoryboardSegue) {
