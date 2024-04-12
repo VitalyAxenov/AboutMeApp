@@ -47,13 +47,13 @@ class ViewController: UIViewController {
 
 extension ViewController {
     
-    
-    enum Alerts {
+    // MARK: Prompts
+    enum Prompt {
         case login
         case password
     }
     
-    fileprivate func promptAlert(remindMe: Alerts) {
+    fileprivate func promptAlert(remindMe: Prompt) {
         let message: String
         
         switch remindMe {
