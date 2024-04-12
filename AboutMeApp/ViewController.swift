@@ -27,13 +27,14 @@ class ViewController: UIViewController {
         super.viewDidLoad()
     }
     
+
+    
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         
         guard
             loginInputField.text != nil,
             loginInputField.text != ""
         else {
-            print("empty login")
             credsAlert(wrong: .login)
             return false
         }
@@ -42,7 +43,6 @@ class ViewController: UIViewController {
             passwordInputField.text != nil,
             passwordInputField.text != ""
         else {
-            print("empty password")
             credsAlert(wrong: .password)
             return false
         }
@@ -51,13 +51,10 @@ class ViewController: UIViewController {
             loginInputField.text == trueLogin,
             passwordInputField.text == truePassword
         else {
-            print("wrong")
             credsAlert(wrong: .creds)
-            // Введенное имя не валидно, отменяем переход и показываем алерт контроллер
             return false
         }
         
-        // Введенное имя валидно, разрешаем переход
         return true
     }
     
@@ -122,14 +119,29 @@ extension ViewController {
     fileprivate func credsAlert(wrong: Alert) {
         
         let message: String
+        let alertAction: UIAlertAction
         
         switch wrong {
         case .login:
             message = "Empty User Name"
+            alertAction = UIAlertAction(
+                title: "OK",
+                style: .default
+            )
         case .password:
             message = "Empty Password"
+            alertAction = UIAlertAction(
+                title: "OK",
+                style: .default
+            )
         case .creds:
             message = "Wrong User Name or Password"
+            alertAction = UIAlertAction(
+                title: "OK",
+                style: .default
+            ) { _ in
+                self.passwordInputField.text = ""
+            }
         }
         
         let alert = UIAlertController(
@@ -138,10 +150,7 @@ extension ViewController {
             preferredStyle: .alert
         )
         
-        alert.addAction(UIAlertAction(
-            title: "OK",
-            style: .default)
-        )
+        alert.addAction(alertAction)
         
         present(alert, animated: true)
     }
