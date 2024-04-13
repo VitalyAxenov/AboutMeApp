@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class LoginScreenViewController: UIViewController {
     
     @IBOutlet var loginInputField: UITextField!
     @IBOutlet var passwordInputField: UITextField!
@@ -95,7 +95,7 @@ class ViewController: UIViewController {
     
 }
 
-extension ViewController {
+extension LoginScreenViewController {
     
     // MARK: Prompts
     enum Prompt {
